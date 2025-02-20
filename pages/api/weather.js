@@ -1,18 +1,12 @@
-const express = require('express');
 const axios = require('axios');
-const cors = require('cors');
 
-const app = express();
-const PORT = process.env.PORT || 3000;
-const API_KEY = '2560476ea59dc2567929adc1da8ecc6f'; // Replace with your OpenWeather API Key
+const API_KEY = '2560476ea59dc2567929adc1da8ecc6f';
 
-app.use(cors());
-app.use(express.json());
+export default async function handler(req, res) {
+	if (req.method !== 'GET') {
+		return res.status(405).json({ error: 'Method not allowed' });
+	}
 
-console.log('Starting server...');
-
-// Route to get current weather and 5-day forecast
-app.get('/weather', async (req, res) => {
 	console.log('Received request:', req.query.city);
 	try {
 		const city = req.query.city;
@@ -31,16 +25,12 @@ app.get('/weather', async (req, res) => {
 		]);
 
 		console.log('Weather data fetched successfully');
-		res.json({
+		return res.status(200).json({
 			weather: weatherResponse.data,
 			forecast: forecastResponse.data,
 		});
 	} catch (error) {
 		console.error('Error fetching weather data:', error.message);
-		res.status(500).json({ error: 'Failed to fetch weather data' });
+		return res.status(500).json({ error: 'Failed to fetch weather data' });
 	}
-});
-
-app.listen(PORT, () => {
-	console.log(`Server is running at http://localhost:${PORT}`);
-});
+}

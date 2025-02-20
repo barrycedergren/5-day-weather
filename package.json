@@ -4,16 +4,21 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"dev": "node api/weather.js"
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"description": "",
 	"dependencies": {
-		"axios": "^latest",
+		"axios": "^1.6.7",
 		"cors": "^2.8.5",
 		"dotenv": "^16.4.7",
-		"express": "^4.21.2"
+		"express": "^4.21.2",
+		"next": "^14.1.0",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0"
 	}
 }

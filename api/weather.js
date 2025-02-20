@@ -1,12 +1,15 @@
+const express = require('express');
 const axios = require('axios');
+const cors = require('cors');
+
+const app = express();
+const port = 3001;
+
+app.use(cors());
 
 const API_KEY = '2560476ea59dc2567929adc1da8ecc6f';
 
-export default async function handler(req, res) {
-	if (req.method !== 'GET') {
-		return res.status(405).json({ error: 'Method not allowed' });
-	}
-
+app.get('/weather', async (req, res) => {
 	console.log('Received request:', req.query.city);
 	try {
 		const city = req.query.city;
@@ -33,4 +36,8 @@ export default async function handler(req, res) {
 		console.error('Error fetching weather data:', error.message);
 		return res.status(500).json({ error: 'Failed to fetch weather data' });
 	}
-}
+});
+
+app.listen(port, () => {
+	console.log(`Server running at http://localhost:${port}`);
+});
